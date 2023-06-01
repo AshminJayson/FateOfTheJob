@@ -2,6 +2,7 @@
 
 import styles from "./page.module.css";
 import { Box, Flex, Text } from "@chakra-ui/react";
+import Fileupload from "../Components/Fileupload";
 
 export default function Home() {
     return (
@@ -11,6 +12,7 @@ export default function Home() {
                     FATE OF THE JOB
                 </Text>
             </Flex>
+            <Fileupload />
         </main>
     );
 }
