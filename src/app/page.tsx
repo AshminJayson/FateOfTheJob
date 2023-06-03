@@ -3,6 +3,7 @@
 import styles from "./page.module.css";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Fileupload from "../Components/Fileupload";
+import Chatbox from "../Components/Chatbox";
 
 export default function Home() {
     return (
@@ -13,6 +14,7 @@ export default function Home() {
                 </Text>
             </Flex>
             <Fileupload />
+            <Chatbox />
         </main>
     );
 }
