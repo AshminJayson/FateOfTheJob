@@ -1,13 +1,14 @@
 'use client';
 import { Box, Container, Flex, Text } from '@chakra-ui/react';
+import { link } from 'fs';
 import React, { useCallback, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { useDropzone , DropzoneOptions } from 'react-dropzone';
 import { FaFile } from 'react-icons/fa';
 
 function MyDropzone() {
   const [file, setFile] = useState<File | null>(null);
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
+  const onDrop: DropzoneOptions['onDrop']  = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       const selectedFile = acceptedFiles[0];
       if (selectedFile.type === 'application/pdf') {
@@ -23,10 +24,10 @@ function MyDropzone() {
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
+    onDrop : onDrop,
     multiple: false,
-    accept: '.pdf',
-  });
+    accept: 'application/pdf',
+  }); 
 
   return (
     <Box
