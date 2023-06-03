@@ -1,7 +1,7 @@
 'use client';
-import { Box, Container, Flex, Text } from '@chakra-ui/react';
-import { link } from 'fs';
+
 import React, { useCallback, useState } from 'react';
+import { Box, Container, Flex, Text } from '@chakra-ui/react';
 import { useDropzone , DropzoneOptions } from 'react-dropzone';
 import { FaFile } from 'react-icons/fa';
 
