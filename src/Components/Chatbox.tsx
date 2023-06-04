@@ -4,38 +4,38 @@ import React, { useState } from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
-  MainContainer,
-  ChatContainer,
-  MessageList,
-  Message,
-  MessageInput,
-  Avatar,
-  TypingIndicator,
+    MainContainer,
+    ChatContainer,
+    MessageList,
+    Message,
+    MessageInput,
+    Avatar,
+    TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 import { MessageDirection } from "@chatscope/chat-ui-kit-react/src/types/unions";
 import axios from "axios";
 
 const gptimage = {
-  imagesrc:
-    "https://img.uxwing.com/wp-content/themes/uxwing/download/communication-chat-call/chatbot-icon.svg",
+    imagesrc:
+        "https://img.uxwing.com/wp-content/themes/uxwing/download/communication-chat-call/chatbot-icon.svg",
 };
 
 export default function Chatbox() {
-  const [messages, setMessages] = useState([
-    {
-      message: "Hello my friend",
-      sender: "bot",
-      direction: "incoming",
-    },
-  ]);
-  const [typing, setTyping] = useState(false);
+    const [messages, setMessages] = useState([
+        {
+            message: "Hello my friend",
+            sender: "bot",
+            direction: "incoming",
+        },
+    ]);
+    const [typing, setTyping] = useState(false);
 
-  const handleSend = async (incomingmessage: string) => {
-    const newmessage = {
-      message: incomingmessage,
-      sender: "user",
-      direction: "outgoing",
-    };
+    const handleSend = async (incomingmessage: string) => {
+        const newmessage = {
+            message: incomingmessage,
+            sender: "user",
+            direction: "outgoing",
+        };
 
     const messageList = [...messages, newmessage];
     setMessages(messageList);
@@ -45,13 +45,16 @@ export default function Chatbox() {
 
   async function getResponse(chatmessages: any) {
     const chatmessage = chatmessages.message;
-    const response = await axios({
+    const response= await axios({
       method: "post",
-      url: "http://localhost:8000/api/chat" + "?message=" + chatmessage,
-      data: chatmessage,
-      headers: { "Content-Type": "application/json" },
+      url: "http://localhost:8000/api/chat",
+      data: JSON.stringify({ message: chatmessage }),
+      headers: { "Content-Type": "application/json"}
+      
     });
-    const newresponse = {
+
+  
+const newresponse = {
       message: response.data.message as string,
       sender: "bot",
       direction: "incoming",
@@ -67,6 +70,8 @@ export default function Chatbox() {
     setTyping(false);
     console.log(messages);
   }
+
+   
 
   return (
     <>
