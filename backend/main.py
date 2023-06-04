@@ -32,12 +32,9 @@ gptClient = gptServices.GPT(settings.OPENAI_API_KEY)
 async def root():
     return {"message": "Hello There!"}
 
+@app.post("/api/chat")
 async def chatBot(request: Message):
     botReply = gptClient.talkToBot(request.message)
-async def chatBot(message):
-    #print('Chat route hit')
-    botReply = gptClient.talkToBot(message)
-    botReply = gptClient.talkToBot(message)
     return {"message": botReply}
 
 

@@ -2,12 +2,13 @@
 
 import { useCallback, useState } from "react";
 import axios from "axios";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { useDropzone, DropzoneOptions, Accept } from "react-dropzone";
 import { FaFile } from "react-icons/fa";
 
 function MyDropzone() {
     const [file, setFile] = useState<File | null>(null);
+    const [buttonclicked, setButtonclicked] = useState(false);
 
     const onDrop: DropzoneOptions["onDrop"] = useCallback(
         (acceptedFiles: File[]) => {
@@ -15,8 +16,17 @@ function MyDropzone() {
                 const selectedFile = acceptedFiles[0];
                 if (selectedFile.type === "application/pdf") {
                     setFile(selectedFile);
+                    
+                }
+            }
+        },
+        []
+    );
+
+    const uploadFile =  () => {
+        if (file){
                     const formData = new FormData();
-                    formData.append("file", selectedFile);
+                    formData.append("file", file);
 
                     axios({
                         method: "post",
@@ -24,11 +34,9 @@ function MyDropzone() {
                         data: formData,
                         headers: { "Content-Type": "multipart/form-data" },
                     }).then((response) => {console.log(response.data);});
+                    setButtonclicked(true);
                 }
-            }
-        },
-        []
-    );
+    };
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop: onDrop,
@@ -37,12 +45,13 @@ function MyDropzone() {
     });
 
     return (
+        <>
         <Box
             {...getRootProps()}
             bg="blackAlpha.300"
             m={10}
-            w="30rem"
-            h="30rem"
+            w="28rem"
+            h="28rem"
             rounded="md"
             border="2px dashed"
             borderColor={isDragActive ? "blue.500" : "gray.300"}
@@ -64,6 +73,8 @@ function MyDropzone() {
             </Flex>
             <input {...getInputProps()} />
         </Box>
+        <Button onClick={uploadFile}>Submit</Button>
+        </>
     );
 }
 
