@@ -8,7 +8,6 @@ import { FaFile } from "react-icons/fa";
 
 function MyDropzone() {
     const [file, setFile] = useState<File | null>(null);
-    const [buttonclicked, setButtonclicked] = useState(false);
 
     const onDrop: DropzoneOptions["onDrop"] = useCallback(
         (acceptedFiles: File[]) => {
@@ -34,7 +33,6 @@ function MyDropzone() {
                         data: formData,
                         headers: { "Content-Type": "multipart/form-data" },
                     }).then((response) => {console.log(response.data);});
-                    setButtonclicked(true);
                 }
     };
 
