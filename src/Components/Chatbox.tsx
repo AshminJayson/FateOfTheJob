@@ -20,7 +20,6 @@ const gptimage = {
     "https://img.uxwing.com/wp-content/themes/uxwing/download/communication-chat-call/chatbot-icon.svg",
 };
 
-
 export default function Chatbox() {
   const [messages, setMessages] = useState([
     {
@@ -41,21 +40,33 @@ export default function Chatbox() {
     const messageList = [...messages, newmessage];
     setMessages(messageList);
     setTyping(true);
-    await getResponse(newmessage.message);
+    await getResponse(newmessage);
   };
 
-  async function getResponse(chatmessage: string) {
-    const responseGpt= await axios({
+  async function getResponse(chatmessages: any) {
+    const chatmessage = chatmessages.message;
+    const response = await axios({
       method: "post",
-      url: "http://localhost:8000/api/chat",
-      data: { message: chatmessage },
-      headers: { "Content-Type": "application/json"}
-      
+      url: "http://localhost:8000/api/chat" + "?message=" + chatmessage,
+      data: chatmessage,
+      headers: { "Content-Type": "application/json" },
+    });
+    const newresponse = {
+      message: response.data.message as string,
+      sender: "bot",
+      direction: "incoming",
+    };
+    if (chatmessages in messages) {
+      const messageList = [...messages, newresponse];
+      setMessages(messageList);
+    } else {
+      const messageList = [...messages, chatmessages, newresponse];
+      setMessages(messageList);
     }
-    )
-    console.log(responseGpt.data.message)
-  }
 
+    setTyping(false);
+    console.log(messages);
+  }
 
   return (
     <>
@@ -64,7 +75,9 @@ export default function Chatbox() {
           <ChatContainer>
             <MessageList
               autoScrollToBottomOnMount={false}
-              typingIndicator={typing ? <TypingIndicator content={""} /> : null}
+              typingIndicator={
+                typing ? <TypingIndicator content={"Bot is typing"} /> : null
+              }
             >
               {messages.map((message, i) => {
                 return message.direction === "outgoing" ? (
@@ -79,7 +92,7 @@ export default function Chatbox() {
                   />
                 ) : (
                   <>
-                    <Avatar src={gptimage.imagesrc} name="John Doe" />
+                    <Avatar src={gptimage.imagesrc} name="Bot" />
                     <Message
                       key={i}
                       model={{

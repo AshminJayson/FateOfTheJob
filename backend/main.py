@@ -27,8 +27,8 @@ async def root():
     return {"message": "Hello There!"}
 
 @app.post("/api/chat")
-async def chatBot(message : str):
-    print('Chat route hit')
+async def chatBot(message):
+    #print('Chat route hit')
     botReply = gptClient.talkToBot(message)
     return {"message": botReply}
 

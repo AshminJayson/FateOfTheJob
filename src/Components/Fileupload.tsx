@@ -23,7 +23,7 @@ function MyDropzone() {
                         url: "http://localhost:8000/api/files",
                         data: formData,
                         headers: { "Content-Type": "multipart/form-data" },
-                    });
+                    }).then((response) => {console.log(response.data);});
                 }
             }
         },
