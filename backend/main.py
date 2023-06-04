@@ -1,12 +1,17 @@
+from typing import Optional
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from PyPDF2 import PdfReader
+from pydantic import BaseModel
 from env import Settings
 from services import gptServices
 
 settings = Settings()
 app = FastAPI()
 
+
+class Message(BaseModel):
+    message: str
 
 origins = [
     "http://localhost:3000",
@@ -20,6 +25,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+    
 gptClient = gptServices.GPT(settings.OPENAI_API_KEY)
 
 @app.get("/")
@@ -27,9 +33,8 @@ async def root():
     return {"message": "Hello There!"}
 
 @app.post("/api/chat")
-async def chatBot(message : str):
-    print('Chat route hit')
-    botReply = gptClient.talkToBot(message)
+async def chatBot(request: Message):
+    botReply = gptClient.talkToBot(request.message)
     return {"message": botReply}
 
 
