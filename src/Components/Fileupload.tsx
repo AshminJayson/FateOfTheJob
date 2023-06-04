@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react";
 import axios from "axios";
 import { Box, Flex, Text } from "@chakra-ui/react";
-import { useDropzone, DropzoneOptions } from "react-dropzone";
+import { useDropzone, DropzoneOptions, Accept } from "react-dropzone";
 import { FaFile } from "react-icons/fa";
 
 function MyDropzone() {
@@ -33,7 +33,7 @@ function MyDropzone() {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop: onDrop,
         multiple: false,
-        // accept: "application/pdf",
+        accept: "application/pdf" as unknown as Accept,
     });
 
     return (
