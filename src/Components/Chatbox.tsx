@@ -13,6 +13,13 @@ import {
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 import { MessageDirection } from "@chatscope/chat-ui-kit-react/src/types/unions";
+import axios from "axios";
+
+const gptimage = {
+  imagesrc:
+    "https://img.uxwing.com/wp-content/themes/uxwing/download/communication-chat-call/chatbot-icon.svg",
+};
+
 
 export default function Chatbox() {
   const [messages, setMessages] = useState([
@@ -34,12 +41,21 @@ export default function Chatbox() {
     const messageList = [...messages, newmessage];
     setMessages(messageList);
     setTyping(true);
+    await getResponse(newmessage.message);
   };
 
-  const gptimage = {
-    imagesrc:
-      "https://img.uxwing.com/wp-content/themes/uxwing/download/communication-chat-call/chatbot-icon.svg",
-  };
+  async function getResponse(chatmessage: string) {
+    const responseGpt= await axios({
+      method: "post",
+      url: "http://localhost:8000/api/chat",
+      data: { message: chatmessage },
+      headers: { "Content-Type": "application/json"}
+      
+    }
+    )
+    console.log(responseGpt.data.message)
+  }
+
 
   return (
     <>
