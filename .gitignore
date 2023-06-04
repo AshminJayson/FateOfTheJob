@@ -33,3 +33,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+#fast api
+__pycache__
+env.py
+
+#vscode files
+**/.vscode/settings.json
