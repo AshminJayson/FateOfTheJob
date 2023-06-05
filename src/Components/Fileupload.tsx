@@ -10,6 +10,7 @@ function MyDropzone() {
     const [file, setFile] = useState<File | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [jobRole, setJobRole] = useState<string | null>(null);
+    const [cansubmit, setCanSubmit] = useState<boolean>(true);
 
     const toast = useToast();
 
@@ -27,7 +28,7 @@ function MyDropzone() {
     );
 
     const uploadFile = () => {
-        if (file) {
+        if (file && cansubmit) {
             const formData = new FormData();
             formData.append("file", file);
             setLoading(true);
@@ -43,6 +44,9 @@ function MyDropzone() {
                     setLoading(false);
                     console.log(response.data.message);
                     setJobRole(response.data.message);
+                    setTimeout(() => {
+                        setCanSubmit(true);
+                      }, 21000);
                 })
                 .catch((err) => {
                     setLoading(false);
