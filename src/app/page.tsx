@@ -2,7 +2,7 @@
 
 import { Flex, Text } from "@chakra-ui/react";
 import Fileupload from "../Components/Fileupload";
-import Chatbox from "../Components/Chatbox";
+import Chatdrawer from "../Components/Chatdrawer";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
         </Text>
       </Flex>
       <Fileupload />
-      <Chatbox />
+      <Chatdrawer />
     </main>
   );
 }
