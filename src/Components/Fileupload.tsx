@@ -8,9 +8,10 @@ import { FaFile } from "react-icons/fa";
 
 function MyDropzone() {
     const [file, setFile] = useState<File | null>(null);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [buttonLoading, setButtonLoading] = useState<boolean>(false);
     const [jobRole, setJobRole] = useState<string | null>(null);
-    const [cansubmit, setCanSubmit] = useState<boolean>(true);
+    const [canSubmit, setCanSubmit] = useState<boolean>(true);
+    const [remainingTime, setRemainingTime] = useState<number>(21);
 
     const toast = useToast();
 
@@ -28,11 +29,24 @@ function MyDropzone() {
     );
 
     const uploadFile = () => {
-        if (file && cansubmit) {
+        if (file && canSubmit) {
             const formData = new FormData();
             formData.append("file", file);
-            setLoading(true);
+            setButtonLoading(true);
             setJobRole(null);
+            setCanSubmit(false);
+            setTimeout(() => {
+                setCanSubmit(true);
+            }, 20000);
+            setRemainingTime(21);
+
+            const timer = setInterval(() => {
+                console.log(remainingTime);
+                if (remainingTime <= 0) {
+                    clearInterval(timer);
+                }
+                setRemainingTime((remainingTime) => remainingTime - 1);
+            }, 1000);
 
             axios({
                 method: "post",
@@ -41,15 +55,12 @@ function MyDropzone() {
                 headers: { "Content-Type": "multipart/form-data" },
             })
                 .then((response) => {
-                    setLoading(false);
-                    console.log(response.data.message);
+                    setButtonLoading(false);
+                    // console.log(response.data.message);
                     setJobRole(response.data.message);
-                    setTimeout(() => {
-                        setCanSubmit(true);
-                      }, 21000);
                 })
                 .catch((err) => {
-                    setLoading(false);
+                    setButtonLoading(false);
                     toast({
                         title: "Error",
                         description: err.message,
@@ -106,9 +117,10 @@ function MyDropzone() {
                 </Text>
             )}
             <Button
-                isLoading={loading}
-                isDisabled={file == null}
+                isLoading={buttonLoading}
+                isDisabled={file == null || !canSubmit}
                 onClick={uploadFile}
+                rightIcon={!canSubmit ? <p>{remainingTime}⏰</p> : <p>✅</p>}
             >
                 Submit
             </Button>
