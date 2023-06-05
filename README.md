@@ -13,6 +13,8 @@ Step 2 : Run the next js application
 
 ```shell
 #/fateofthejob
+#Install necessary node modules
+npm install
 npm run dev
 #The next js application can be accessed on localhost:3000
 ```
