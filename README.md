@@ -5,6 +5,9 @@ Step 1 : Start the backend server
 ```shell
 cd /backend
 #/fateofthejob/backend
+
+#Install pip packages
+pip install -r requirements.txt
 uvicorn main:app --reload --port=8000
 #The server is be exposed on localhost:8000
 ```
@@ -13,6 +16,7 @@ Step 2 : Run the next js application
 
 ```shell
 #/fateofthejob
+
 #Install necessary node modules
 npm install
 npm run dev
