@@ -15,6 +15,7 @@ function MyDropzone() {
 
     const onDrop: DropzoneOptions["onDrop"] = useCallback(
         (acceptedFiles: File[]) => {
+            setJobRole(null);
             if (acceptedFiles.length > 0) {
                 const selectedFile = acceptedFiles[0];
                 if (selectedFile.type === "application/pdf") {
