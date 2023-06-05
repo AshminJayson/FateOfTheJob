@@ -8,6 +8,7 @@ cd /backend
 
 #Install pip packages
 pip install -r requirements.txt
+
 uvicorn main:app --reload --port=8000
 #The server is be exposed on localhost:8000
 ```
@@ -19,6 +20,7 @@ Step 2 : Run the next js application
 
 #Install necessary node modules
 npm install
+
 npm run dev
 #The next js application can be accessed on localhost:3000
 ```
