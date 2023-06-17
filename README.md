@@ -10,7 +10,6 @@ FateOfTheJob is a Next.js application with a backend in FastAPI. It provides a c
 
 To run the application, follow the steps below:
 
-
 Step 1 : Start the backend server
 
 ```shell
@@ -20,7 +19,11 @@ cd /backend
 #Install pip packages
 pip install -r requirements.txt
 
+#For development
 uvicorn main:app --reload --port=8000
+
+#For testing/production
+uvicorn main:app --host 0.0.0.0 --port=8000
 #The server is be exposed on localhost:8000
 ```
 
@@ -59,4 +62,3 @@ To use FateOfTheJob, follow the installation steps mentioned above. Once the app
 ## Contributing
 
 Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request on the [GitHub repository](https://github.com/AshminJayson/FateOfTheJob).
-
